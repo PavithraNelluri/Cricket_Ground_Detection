@@ -21,7 +21,6 @@ if uploaded_file is not None:
 
     results = model.predict(img_array, conf=0.6)
     boxes = results[0].boxes.xyxy.cpu().numpy()
-
     if len(boxes) > 0:
             areas = (boxes[:, 2] - boxes[:, 0]) * (boxes[:, 3] - boxes[:, 1])
             best_box = boxes[np.argmax(areas)]
@@ -32,3 +31,6 @@ if uploaded_file is not None:
             cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
 
             st.image(img, caption="Best Detection")
+    else:
+        st.warning("No cricket ground detected in this image.")
+        st.image(image, caption="Original Image")
